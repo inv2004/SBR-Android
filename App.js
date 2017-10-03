@@ -1,8 +1,15 @@
 import React, { Component } from 'react';
-import { AppRegistry, ScrollView, Text, Image, View, Alert, 
-  TouchableHighlight } from 'react-native';
+import {
+  AppRegistry,
+  ScrollView,
+  Text,
+  Image,
+  View,
+  Alert,
+  TouchableHighlight,
+} from 'react-native';
 
-import { StackNavigator, NavigationActions  } from 'react-navigation';  
+import { StackNavigator, NavigationActions } from 'react-navigation'; // 1.0.0-beta.13
 
 class BookTitle extends Component {
   static navigationOptions = ({ navigation }) => ({
@@ -22,14 +29,18 @@ class BookTitle extends Component {
 class BookOnShelf extends Component {
   render() {
     let pic = {
-      uri: 'https://upload.wikimedia.org/wikipedia/commons/d/de/Bananavarieties.jpg'
+      uri: 'https://upload.wikimedia.org/wikipedia/commons/d/de/Bananavarieties.jpg',
     };
     return (
-      <TouchableHighlight onPress={() => this.props.rootNavigation.navigate('BookTitle', { name: this.props.name }) }
+      <TouchableHighlight
+        onPress={() =>
+          this.props.rootNavigation.navigate('BookTitle', {
+            name: this.props.name,
+          })}
         underlayColor="white">
         <View>
           <Text>Book: {this.props.name}</Text>
-          <Image source={pic} style={{width: 193, height: 110}}/>
+          <Image source={pic} style={{ width: 193, height: 110 }} />
         </View>
       </TouchableHighlight>
     );
@@ -39,21 +50,33 @@ class BookOnShelf extends Component {
 class BookCategory extends Component {
   render() {
     return (
-    <View>
-      <Text>Category: {this.props.name}</Text>
-      <ScrollView horizontal={true}>
-        <BookOnShelf name="test1" rootNavigation={this.props.rootNavigation} />
-        <BookOnShelf name="test2" rootNavigation={this.props.rootNavigation} />
-        <BookOnShelf name="test1" rootNavigation={this.props.rootNavigation} />
-        <BookOnShelf name="test2" rootNavigation={this.props.rootNavigation} />
-      </ScrollView>    
-    </View>
-    )
+      <View>
+        <Text>Category: {this.props.name}</Text>
+        <ScrollView horizontal={true}>
+          <BookOnShelf
+            name="test1"
+            rootNavigation={this.props.rootNavigation}
+          />
+          <BookOnShelf
+            name="test2"
+            rootNavigation={this.props.rootNavigation}
+          />
+          <BookOnShelf
+            name="test1"
+            rootNavigation={this.props.rootNavigation}
+          />
+          <BookOnShelf
+            name="test2"
+            rootNavigation={this.props.rootNavigation}
+          />
+        </ScrollView>
+      </View>
+    );
   }
 }
 
 class BookShelf extends Component {
-  static navigationOptions = { title: 'BookShelf8', };
+  static navigationOptions = { title: 'BookShelf' };
 
   render() {
     return (
@@ -65,7 +88,7 @@ class BookShelf extends Component {
         <BookCategory name="cat5" rootNavigation={this.props.navigation} />
         <BookCategory name="cat6" rootNavigation={this.props.navigation} />
       </ScrollView>
-    )
+    );
   }
 }
 
@@ -75,4 +98,3 @@ export const App = StackNavigator({
 });
 
 export default App;
-
