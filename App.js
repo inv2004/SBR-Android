@@ -34,7 +34,7 @@ class BookOnShelf extends Component {
     return (
       <TouchableHighlight
         onPress={() =>
-          this.props.rootNavigation.navigate('BookTitle', {
+          this.props.navigation.navigate('BookTitle', {
             name: this.props.name,
           })}
         underlayColor="white">
@@ -53,22 +53,10 @@ class BookCategory extends Component {
       <View>
         <Text>Category: {this.props.name}</Text>
         <ScrollView horizontal={true}>
-          <BookOnShelf
-            name="test1"
-            rootNavigation={this.props.rootNavigation}
-          />
-          <BookOnShelf
-            name="test2"
-            rootNavigation={this.props.rootNavigation}
-          />
-          <BookOnShelf
-            name="test1"
-            rootNavigation={this.props.rootNavigation}
-          />
-          <BookOnShelf
-            name="test2"
-            rootNavigation={this.props.rootNavigation}
-          />
+          <BookOnShelf name="test1" {...this.props} />
+          <BookOnShelf name="test2" {...this.props} />
+          <BookOnShelf name="test1" {...this.props} />
+          <BookOnShelf name="test2" {...this.props} />
         </ScrollView>
       </View>
     );
@@ -81,12 +69,12 @@ class BookShelf extends Component {
   render() {
     return (
       <ScrollView>
-        <BookCategory name="cat1" rootNavigation={this.props.navigation} />
-        <BookCategory name="cat2" rootNavigation={this.props.navigation} />
-        <BookCategory name="cat3" rootNavigation={this.props.navigation} />
-        <BookCategory name="cat4" rootNavigation={this.props.navigation} />
-        <BookCategory name="cat5" rootNavigation={this.props.navigation} />
-        <BookCategory name="cat6" rootNavigation={this.props.navigation} />
+        <BookCategory name="cat1" {...this.props} />
+        <BookCategory name="cat2" {...this.props} />
+        <BookCategory name="cat3" {...this.props} />
+        <BookCategory name="cat4" {...this.props} />
+        <BookCategory name="cat5" {...this.props} />
+        <BookCategory name="cat6" {...this.props} />
       </ScrollView>
     );
   }
