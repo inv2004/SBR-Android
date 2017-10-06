@@ -20,7 +20,7 @@ class BookTitle extends Component {
     const { params } = this.props.navigation.state;
     return (
       <View>
-        <Text>text {params.name}</Text>
+        <Text>{params.name}</Text>
       </View>
     );
   }
@@ -29,17 +29,17 @@ class BookTitle extends Component {
 class BookOnShelf extends Component {
   render() {
     let pic = {
-      uri: 'https://upload.wikimedia.org/wikipedia/commons/d/de/Bananavarieties.jpg',
+      uri: mbox.uri+"/"+this.props.book.image_small,
     };
     return (
       <TouchableHighlight
         onPress={() =>
           this.props.navigation.navigate('BookTitle', {
-            name: this.props.name,
+            name: this.props.book.title
           })}
         underlayColor="white">
         <View>
-          <Text>Book: {this.props.name}</Text>
+          <Text>{this.props.book.title.substring(0,20)}</Text>
           <Image source={pic} style={{ width: 193, height: 110 }} />
         </View>
       </TouchableHighlight>
@@ -49,21 +49,17 @@ class BookOnShelf extends Component {
 
 class BookCategory extends Component {
   render() {
+    console.debug("bookList.len: "+this.props.cat.length);
+    let bookList = this.props.cat.map((x) =>
+      <BookOnShelf {...this.props} key={x.id} name={x.title} book={x} />
+    );
     return (
       <View>
-        <Text>Category: {this.props.name}</Text>
+        <Text style={{fontWeight: 'bold'}}>{this.props.name}</Text>
         <ScrollView horizontal={true}>
-          <BookOnShelf name="test1" {...this.props} />
-          <BookOnShelf name="test2" {...this.props} />
-          <BookOnShelf name="test3" {...this.props} />
-          <BookOnShelf name="test4" {...this.props} />
-          <BookOnShelf name="test5" {...this.props} />
-          <BookOnShelf name="test6" {...this.props} />
-          <BookOnShelf name="test7" {...this.props} />
-          <BookOnShelf name="test8" {...this.props} />
-          <BookOnShelf name="test9" {...this.props} />
-          <BookOnShelf name="test10" {...this.props} />
+          {bookList}
         </ScrollView>
+        <Text> </Text>
       </View>
     );
   }
@@ -72,18 +68,33 @@ class BookCategory extends Component {
 class BookShelf extends Component {
   static navigationOptions = { title: 'BookShelf' };
 
-  componenDidMount() {
+  constructor(props) {
+    super(props);
+    this.state = {books: {}};
   }
 
+  fetchData() {
+    fetch(mbox.uri+"/"+mbox.api+"/?action=recommend&token="+mbox.token)
+      .then((response) => response.json())
+      .then((responseJson) => {
+        this.setState({books: responseJson.books});
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }
+    
+  componentDidMount() {
+    this.fetchData();
+  }
+    
   render() {
+    let catList = Object.keys(this.state.books).map((x) =>
+      <BookCategory {...this.props} key={x} name={x} cat={this.state.books[x]} />
+    );
     return (
       <ScrollView>
-        <BookCategory name="cat1" {...this.props} />
-        <BookCategory name="cat2" {...this.props} />
-        <BookCategory name="cat3" {...this.props} />
-        <BookCategory name="cat4" {...this.props} />
-        <BookCategory name="cat5" {...this.props} />
-        <BookCategory name="cat6" {...this.props} />
+        {catList}
       </ScrollView>
     );
   }
@@ -94,6 +105,6 @@ export const App = StackNavigator({
   BookTitle: { screen: BookTitle },
 });
 
-const token = require('./mbox.json');
+const mbox = require('./mbox.json');
 
 export default App;
