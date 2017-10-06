@@ -55,8 +55,14 @@ class BookCategory extends Component {
         <ScrollView horizontal={true}>
           <BookOnShelf name="test1" {...this.props} />
           <BookOnShelf name="test2" {...this.props} />
-          <BookOnShelf name="test1" {...this.props} />
-          <BookOnShelf name="test2" {...this.props} />
+          <BookOnShelf name="test3" {...this.props} />
+          <BookOnShelf name="test4" {...this.props} />
+          <BookOnShelf name="test5" {...this.props} />
+          <BookOnShelf name="test6" {...this.props} />
+          <BookOnShelf name="test7" {...this.props} />
+          <BookOnShelf name="test8" {...this.props} />
+          <BookOnShelf name="test9" {...this.props} />
+          <BookOnShelf name="test10" {...this.props} />
         </ScrollView>
       </View>
     );
@@ -65,6 +71,9 @@ class BookCategory extends Component {
 
 class BookShelf extends Component {
   static navigationOptions = { title: 'BookShelf' };
+
+  componenDidMount() {
+  }
 
   render() {
     return (
@@ -84,5 +93,7 @@ export const App = StackNavigator({
   BookShelf: { screen: BookShelf },
   BookTitle: { screen: BookTitle },
 });
+
+const token = require('./mbox.json');
 
 export default App;
