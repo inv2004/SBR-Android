@@ -7,20 +7,22 @@ import {
   View,
   Alert,
   TouchableHighlight,
+  WebView,
 } from 'react-native';
 
 import { StackNavigator, NavigationActions } from 'react-navigation'; // 1.0.0-beta.13
 
 class BookTitle extends Component {
   static navigationOptions = ({ navigation }) => ({
-    title: navigation.state.params.name,
+    title: navigation.state.params.book.title,
   });
 
   render() {
-    const { params } = this.props.navigation.state;
+    const { book } = this.props.navigation.state.params;
     return (
       <View>
-        <Text>{params.name}</Text>
+        <Image source={{uri:mbox.uri+"/"+book.image}} style={{ width: 293, height: 160 }} />
+        <Text>{book.intro}</Text>
       </View>
     );
   }
@@ -35,7 +37,7 @@ class BookOnShelf extends Component {
       <TouchableHighlight
         onPress={() =>
           this.props.navigation.navigate('BookTitle', {
-            name: this.props.book.title
+            book: this.props.book
           })}
         underlayColor="white">
         <View>
